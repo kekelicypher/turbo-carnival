@@ -48,9 +48,20 @@ def view():
 
 @app.command()
 def done():
-    with open("list.csv", "w", newline="") as file:
+    with open(filename, "w", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
+
+
+@app.command()
+def total():
+    total = 0
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file, fieldnames=fieldnames)
+        reader.__next__()
+        for amount in reader:
+            total += int(amount.get("Amount"))
+        print(total)
 
 
 if __name__ == "__main__":
